@@ -5,7 +5,7 @@ const express = require("express");
 const cors = require("cors");
 // eslint-disable-next-line max-len
 const stripe = require("stripe")(
-  ""
+  "YOUR API KEY GOES HERE"
   // eslint-disable-next-line indent
 );
 
