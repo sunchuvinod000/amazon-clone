@@ -5,8 +5,8 @@ const express = require("express");
 const cors = require("cors");
 // eslint-disable-next-line max-len
 const stripe = require("stripe")(
+  ""
   // eslint-disable-next-line indent
-  "sk_test_51Ix383SGLAEqUxAUNMtoH2MTzFsmZv6A7P0jSQ8lRKW0hP57ZvLYyLtuxf54gb6X8X0XP0bDlKpvco33vg4SPQPJ00d5MB9jtQ"
 );
 
 // API
