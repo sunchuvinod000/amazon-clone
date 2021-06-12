@@ -31,7 +31,7 @@ function Subtotal() {
           <>
             <p>
               {/* Part of the homework */}
-              Subtotal ({basket.length} items): <strong>{value}</strong>
+              Subtotal ({basket?.length} items): <strong>{value}</strong>
             </p>
             <small className="subtotal_gift">
               <input type="checkbox" /> This order contains a gift

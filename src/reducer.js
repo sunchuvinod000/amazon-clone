@@ -1,5 +1,17 @@
+import axios from "./axios";
+
+import { cart_items } from "./Fetch_items";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
+
+//get the cart items from redis
+const array = [];
+cart_items().then((res) => {
+  res.forEach((item) => array.push(item));
+  console.log("array is", array);
+});
 export const initialState = {
-  basket: JSON.parse(localStorage.getItem("basket")) || [],
+  basket: array || [],
   user: null,
 };
 
@@ -12,13 +24,23 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "ADD_TO_BASKET":
       const data = [...state.basket, action.item];
-      localStorage.setItem("basket", JSON.stringify(data));
+      console.log(cookies.get("user"));
+      axios
+        .post("/redisadditem", {
+          user: cookies.get("user"),
+          items: action.item,
+        })
+        .then((res) => {
+          console.log("response from server is ", res.data);
+        });
+
       return {
         ...state,
         basket: [...state.basket, action.item],
       };
 
     case "EMPTY_BASKET":
+      axios.post("/empty", { user: cookies.get("user") });
       return {
         ...state,
         basket: [],
@@ -26,7 +48,7 @@ const reducer = (state, action) => {
 
     case "REMOVE_FROM_BASKET":
       const index = state.basket.findIndex(
-        (basketItem) => basketItem.id === action.id
+        (basketItem) => basketItem.id === action.item.id
       );
       let newBasket = [...state.basket];
 
@@ -34,10 +56,13 @@ const reducer = (state, action) => {
         newBasket.splice(index, 1);
       } else {
         console.warn(
-          `Cant remove product (id: ${action.id}) as its not in basket!`
+          `Cant remove product (id: ${action.item.id}) as its not in basket!`
         );
       }
-      localStorage.setItem("basket", JSON.stringify(newBasket));
+      axios.post("/remove", {
+        user: cookies.get("user"),
+        index: index,
+      });
 
       return {
         ...state,

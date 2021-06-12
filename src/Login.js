@@ -3,6 +3,8 @@ import "./Login.css";
 import { Link, useHistory } from "react-router-dom";
 import { auth } from "./Firebase";
 import { useStateValue } from "./StateProvider";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 function Login() {
   const history = useHistory();
   const [email, setEmail] = useState("");
@@ -15,7 +17,7 @@ function Login() {
       .signInWithEmailAndPassword(email, password)
       .then((auth) => {
         if (auth) {
-          console.log(auth);
+          cookies.set("user", email);
           history.push("/");
         }
       })
@@ -30,6 +32,7 @@ function Login() {
         //successfull registration with auth
 
         if (auth) {
+          cookies.set("user", email);
           history.push("/");
         }
       })

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function Checkout() {
   const [{ basket, user }] = useStateValue();
   const isEmpty = basket?.length > 0 ? false : true;
-  console.log("basket from localstorage is", basket);
+
   return (
     <div className="checkout">
       <div className="checkout_left">

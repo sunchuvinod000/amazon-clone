@@ -2,7 +2,7 @@
 import firebase from "firebase";
 
 const firebaseConfig = {
-  //YOUR API CONFIG FILE GOES HERE
+  //your firebase config file goes here
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
